@@ -22,8 +22,15 @@ from redbot.core.config import Config
 SHARED_API_TOKENS = "SHARED_API_TOKENS"
 
 
+def _read_secret(service: str, token_name: str) -> str:
+    """Read the secret; hidden prompt when interactive, stdin otherwise."""
+    if sys.stdin.isatty():
+        return getpass.getpass(f"Paste the {service} {token_name} (hidden): ").strip()
+    return sys.stdin.readline().strip()
+
+
 async def main(instance: str, service: str, token_name: str) -> None:
-    secret = getpass.getpass(f"Paste the {service} {token_name} (hidden): ").strip()
+    secret = _read_secret(service, token_name)
     if not secret:
         print("No value entered; nothing changed.")
         return
