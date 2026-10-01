@@ -21,7 +21,7 @@ merge. Custom cogs authored for this deployment live in a separate repository.
 - [x] 17 feature cogs loaded via `config/cogs.txt` (19 total with Core + CogManagerUI)
 - [x] Backup, update, run and supervise scripts, plus docs
 - [x] Branding: violet `#7C3AED` embed colour, description, help tagline, generated avatar
-- [ ] Custom cogs
+- [x] Custom cog: `deepseek` AI assistant (`discord-bot-cogs` repo) — `!ai`, mentions, reply, AI channel
 - [ ] Unattended service (see `docs/setup.md`)
 - [ ] Music / Lavalink (deferred)
 
@@ -41,12 +41,17 @@ discord-bot-deploy/
 │   ├── new-instance.ps1   # create the instance
 │   ├── configure.ps1      # owner / prefix / token
 │   ├── load-cogs.ps1      # apply config/cogs.txt
+│   ├── add-cog-path.ps1   # register a local cog path (like [p]addpath)
+│   ├── set-api-key.ps1    # store a shared API token (hidden prompt)
 │   ├── brand.ps1          # apply config/branding.json
 │   ├── make-avatar.ps1    # generate assets/nebula-avatar.png
 │   ├── start.ps1          # run in foreground
 │   ├── run-loop.ps1       # supervised: restart on crash
 │   ├── backup.ps1         # redbot-setup backup + prune
 │   └── update.ps1         # upgrade Red
+├── tools/
+│   ├── command_reference.py  # generate docs/commands.md
+│   └── set_api_key.py        # write a shared API token via Red's config
 ├── data/                  # gitignored — token, config, databases
 ├── backups/               # gitignored
 └── logs/                  # gitignored

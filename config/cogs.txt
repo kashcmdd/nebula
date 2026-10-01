@@ -21,3 +21,7 @@ reports
 streams
 trivia
 warnings
+
+# Custom cog (repo: discord-bot-cogs). Register its path first with:
+#   scripts/add-cog-path.ps1 -Path ..\discord-bot-cogs
+deepseek
