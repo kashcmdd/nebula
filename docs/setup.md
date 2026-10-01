@@ -65,6 +65,25 @@ The equivalent in Discord is a single command:
 ./scripts/run-loop.ps1       # supervised: restarts on crash, logs to logs/
 ```
 
+## 7. Branding
+
+Apply the embed colour, description and help tagline:
+
+```powershell
+./scripts/brand.ps1
+```
+
+Discord-side branding (set in the Developer Portal, since it needs the app, not
+the instance):
+
+1. **Avatar** — Developer Portal → General Information → App Icon → upload
+   `assets/nebula-avatar.png`. Regenerate it any time with
+   `./scripts/make-avatar.ps1`.
+2. **Username** — Developer Portal → Bot → Username.
+
+The script writes the same values as the in-Discord commands
+`!set colour #7C3AED`, `!set description <text>` and `!helpset tagline <text>`.
+
 ## Running unattended
 
 Two options, in order of robustness:

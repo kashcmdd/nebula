@@ -20,7 +20,7 @@ merge. Custom cogs authored for this deployment live in a separate repository.
 - [x] Instance `nebula` (owner, prefix `!`, token) — connects to the Gateway
 - [x] 17 feature cogs loaded via `config/cogs.txt` (19 total with Core + CogManagerUI)
 - [x] Backup, update, run and supervise scripts, plus docs
-- [ ] Branding pass (name/avatar/colour/help theme)
+- [x] Branding: violet `#7C3AED` embed colour, description, help tagline, generated avatar
 - [ ] Custom cogs
 - [ ] Unattended service (see `docs/setup.md`)
 - [ ] Music / Lavalink (deferred)
@@ -29,7 +29,10 @@ merge. Custom cogs authored for this deployment live in a separate repository.
 
 ```
 discord-bot-deploy/
-├── config/cogs.txt        # source of truth for loaded cogs
+├── assets/                # generated brand assets (avatar)
+├── config/
+│   ├── cogs.txt           # source of truth for loaded cogs
+│   └── branding.json      # colour / description / help tagline
 ├── docs/
 │   ├── architecture.md    # diagram + decisions + failure/recovery
 │   └── setup.md           # reproduce from scratch
@@ -38,6 +41,8 @@ discord-bot-deploy/
 │   ├── new-instance.ps1   # create the instance
 │   ├── configure.ps1      # owner / prefix / token
 │   ├── load-cogs.ps1      # apply config/cogs.txt
+│   ├── brand.ps1          # apply config/branding.json
+│   ├── make-avatar.ps1    # generate assets/nebula-avatar.png
 │   ├── start.ps1          # run in foreground
 │   ├── run-loop.ps1       # supervised: restart on crash
 │   ├── backup.ps1         # redbot-setup backup + prune
