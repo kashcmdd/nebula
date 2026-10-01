@@ -1,0 +1,23 @@
+# Cogs loaded for the Nebula instance.
+#
+# Names must match the bundled cog folders shipped with Red (case-insensitive).
+# Blank lines and lines starting with # are ignored.
+#
+# `audio` is intentionally omitted until the music/Lavalink phase.
+admin
+alias
+cleanup
+customcom
+downloader
+economy
+filter
+general
+image
+mod
+modlog
+mutes
+permissions
+reports
+streams
+trivia
+warnings

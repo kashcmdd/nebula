@@ -1,0 +1,23 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# --- Red runtime data ---
+# Contains the bot token, databases and per-guild config. NEVER commit this.
+/data/
+/backups/
+*.log
+logs/
+
+# --- Secrets ---
+.env
+secrets/
+*.token
+
+# --- Local / editor ---
+.vscode/
+.idea/
+*.swp
+Thumbs.db
