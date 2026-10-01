@@ -54,8 +54,8 @@ if ($brand.PSObject.Properties.Name -contains 'description') {
 if ($brand.PSObject.Properties.Name -contains 'help') {
     if ($global.PSObject.Properties.Name -contains 'help') { $help = $global.help }
     else { $help = New-Object psobject; Set-Prop $global 'help' $help }
-    if ($brand.help.PSObject.Properties.Name -contains 'tagline') {
-        Set-Prop $help 'tagline' $brand.help.tagline
+    foreach ($prop in $brand.help.PSObject.Properties) {
+        Set-Prop $help $prop.Name $prop.Value
     }
 }
 
@@ -65,5 +65,8 @@ $json = $cfg | ConvertTo-Json -Depth 100
 Write-Host "Applied branding to $settings"
 Write-Host "  color       : $($brand.color)"
 Write-Host "  description : $($brand.description)"
-Write-Host "  help.tagline: $($brand.help.tagline)"
+Write-Host "  help:"
+foreach ($prop in $brand.help.PSObject.Properties) {
+    Write-Host "    $($prop.Name): $($prop.Value)"
+}
 Write-Host "Backup saved to $settings.bak"
