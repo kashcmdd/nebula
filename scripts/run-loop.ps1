@@ -21,6 +21,10 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
+# Force UTF-8 so logging never fails on a cp1252 Windows console (emoji etc.).
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
+
 $redbot = Join-Path $root ".venv\Scripts\redbot.exe"
 $logDir = Join-Path $root "logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
