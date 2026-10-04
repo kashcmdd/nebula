@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Byte-compile the Python tools
+        run: python -m compileall -q tools
+
+      - name: PowerShell syntax check
+        shell: pwsh
+        run: |
+          $failed = $false
+          Get-ChildItem scripts/*.ps1 | ForEach-Object {
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $_.FullName, [ref]$null, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $failed = $true
+              Write-Host "::error file=$($_.Name)::$($errors[0].Message)"
+            } else {
+              Write-Host "ok   $($_.Name)"
+            }
+          }
+          if ($failed) { exit 1 }
