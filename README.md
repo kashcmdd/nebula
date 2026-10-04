@@ -14,6 +14,19 @@ merge. Custom cogs authored for this deployment live in a separate repository.
 > the backup and update tooling, the branding, and the documentation you are
 > reading.
 
+## The Nebula project
+
+Nebula is split across two repositories that belong together:
+
+| Repository | Role |
+| --- | --- |
+| **nebula** (this repo) | Deployment layer: environment, config, scripts, docs, branding. |
+| **[nebula-cogs](https://github.com/kashcmdd/nebula-cogs)** | The original cogs written for Nebula (the `deepseek` AI assistant). |
+
+Local working copies are the folders `discord-bot-deploy` (this repo) and
+`discord-bot-cogs` (the cogs). This repo installs and runs Red and loads the
+cogs from the other.
+
 ## Status
 
 - [x] Python 3.11 virtualenv + Red 3.5.24
