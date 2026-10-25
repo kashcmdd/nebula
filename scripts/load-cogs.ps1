@@ -44,8 +44,15 @@ $array = "[" + (($cogs | ForEach-Object { '"' + $_ + '"' }) -join ", ") + "]"
 
 Copy-Item $settings "$settings.bak" -Force
 $raw = Get-Content $settings -Raw
+$trimmed = $raw.Trim()
 
-if ($raw -match '"packages"\s*:\s*\[[^\]]*\]') {
+# A fresh instance's core config is empty ({}): Red only writes the GLOBAL block
+# on first boot, and Core's config identifier is 0. Seed the whole structure so
+# the packages list exists before the bot has ever started.
+if (-not $trimmed -or $trimmed -eq "{}") {
+    $updated = '{"0": {"GLOBAL": {"packages": ' + $array + '}}}'
+}
+elseif ($raw -match '"packages"\s*:\s*\[[^\]]*\]') {
     $updated = $raw -replace '"packages"\s*:\s*\[[^\]]*\]', ('"packages": ' + $array)
 }
 else {
