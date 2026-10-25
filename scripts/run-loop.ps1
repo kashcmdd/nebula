@@ -25,7 +25,8 @@ Set-Location $root
 $env:PYTHONUTF8 = "1"
 $env:PYTHONIOENCODING = "utf-8"
 
-$redbot = Join-Path $root ".venv\Scripts\redbot.exe"
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$redbot = Get-VenvExe -Name "redbot"
 $logDir = Join-Path $root "logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 $log = Join-Path $logDir "$Instance.out.log"

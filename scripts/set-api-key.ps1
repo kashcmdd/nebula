@@ -28,11 +28,11 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
-$python = Join-Path $root ".venv\Scripts\python.exe"
-if (-not (Test-Path $python)) { throw "Virtualenv not found. Run scripts/install.ps1 first." }
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$python = Get-VenvPython
 
 $wasRunning = $false
-$running = Get-Process redbot -ErrorAction SilentlyContinue
+$running = Get-RedbotProcess -Instance $Instance
 if ($running) {
     $wasRunning = $true
     $running | Stop-Process -Force
@@ -44,11 +44,15 @@ if ($running) {
 if ($wasRunning -and -not $SkipRestart) {
     $logDir = Join-Path $root "logs"
     New-Item -ItemType Directory -Force -Path $logDir | Out-Null
-    Start-Process -FilePath (Join-Path $root ".venv\Scripts\redbot.exe") `
-        -ArgumentList $Instance `
-        -RedirectStandardOutput (Join-Path $logDir "$Instance.out.log") `
-        -RedirectStandardError (Join-Path $logDir "$Instance.err.log") `
-        -NoNewWindow
+    $startArgs = @{
+        FilePath               = Get-VenvExe -Name "redbot"
+        ArgumentList           = $Instance
+        RedirectStandardOutput = (Join-Path $logDir "$Instance.out.log")
+        RedirectStandardError  = (Join-Path $logDir "$Instance.err.log")
+    }
+    # -NoNewWindow is a Windows-only switch; POSIX always spawns detached.
+    if ($script:OnWindows) { $startArgs.NoNewWindow = $true }
+    Start-Process @startArgs
     Write-Host "Restarted $Instance."
 }
 elseif (-not $SkipRestart) {

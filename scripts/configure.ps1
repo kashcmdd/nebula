@@ -34,10 +34,8 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
-$redbot = Join-Path $root ".venv\Scripts\redbot.exe"
-if (-not (Test-Path $redbot)) {
-    throw "redbot not found. Run scripts/install.ps1 first."
-}
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$redbot = Get-VenvExe -Name "redbot"
 
 $redArgs = @($Instance, "--edit", "--no-prompt")
 

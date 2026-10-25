@@ -19,8 +19,8 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
-$python = Join-Path $root ".venv\Scripts\python.exe"
-if (-not (Test-Path $python)) { throw "Virtualenv not found. Run scripts/install.ps1 first." }
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$python = Get-VenvPython
 
 Write-Host "Upgrading Red-DiscordBot..."
 & $python -m pip install --upgrade Red-DiscordBot

@@ -26,8 +26,8 @@ Set-Location $root
 if (-not $DestinationRoot) { $DestinationRoot = Join-Path $root "backups" }
 New-Item -ItemType Directory -Force -Path $DestinationRoot | Out-Null
 
-$setup = Join-Path $root ".venv\Scripts\redbot-setup.exe"
-if (-not (Test-Path $setup)) { throw "redbot-setup not found. Run scripts/install.ps1 first." }
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$setup = Get-VenvExe -Name "redbot-setup"
 
 $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $dest = Join-Path $DestinationRoot $stamp

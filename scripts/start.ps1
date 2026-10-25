@@ -17,4 +17,6 @@ Set-Location $root
 $env:PYTHONUTF8 = "1"
 $env:PYTHONIOENCODING = "utf-8"
 
-& (Join-Path $root ".venv\Scripts\redbot.exe") $Instance
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$redbot = Get-VenvExe -Name "redbot"
+& $redbot $Instance

@@ -1,12 +1,16 @@
 # Setup
 
-Reproducing this deployment from scratch on Windows.
+Reproducing this deployment from scratch. The scripts are cross-platform and
+work on Windows and Linux (PowerShell 7 `pwsh` on Linux); the service recipes
+below differ per platform.
 
 ## 0. Prerequisites
 
 - **Python 3.11** (not 3.12+). Red declares `python_requires = ">=3.8.1,<3.12"`.
   `uv` can provide one: `uv python install 3.11`.
 - **Git**.
+- **PowerShell 7** (`pwsh`) on Linux — the scripts need PowerShell, and the
+  legacy Windows-only `powershell.exe` is not present there.
 
 ## 1. Create the environment
 
@@ -100,6 +104,32 @@ crash. Install NSSM (`winget install NSSM.NSSM`) and register the bot's
 **B. Logon task / startup folder.** No extra tools, no stored password, but the
 bot only runs while you are logged in. Put a shortcut to `scripts/run-loop.ps1`
 in `shell:startup`.
+
+**C. Linux: systemd user unit.** The equivalent of (A) on a Linux host. Create
+`~/.config/systemd/user/nebula.service`:
+
+```ini
+[Unit]
+Description=Nebula (Red-DiscordBot)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/nebula
+ExecStart=/usr/bin/pwsh -NoProfile -File scripts/run-loop.ps1
+Restart=always
+RestartSec=10
+Environment=PYTHONUTF8=1
+Environment=PYTHONIOENCODING=utf-8
+
+[Install]
+WantedBy=default.target
+```
+
+Then `systemctl --user daemon-reload && systemctl --user enable --now nebula`.
+Run `loginctl enable-linger $USER` so it starts at boot without you logging in.
+Red stores its instance registry under `$XDG_DATA_HOME` (`~/.local/share`), so
+the unit must run as your own user, not root.
 
 ## Backups
 

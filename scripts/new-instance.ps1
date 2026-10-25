@@ -30,10 +30,8 @@ if (-not $DataPath) {
     $DataPath = Join-Path $root "data"
 }
 
-$setup = Join-Path $root ".venv\Scripts\redbot-setup.exe"
-if (-not (Test-Path $setup)) {
-    throw "redbot-setup not found. Run scripts/install.ps1 first."
-}
+. (Join-Path $PSScriptRoot "lib/venv.ps1")
+$setup = Get-VenvExe -Name "redbot-setup"
 
 Write-Host "Creating instance '$InstanceName' at $DataPath (backend: $Backend)..."
 & $setup --no-prompt --instance-name $InstanceName --data-path $DataPath --backend $Backend
