@@ -46,7 +46,18 @@ else {
     }
 }
 
-$python = Join-Path $root "$VenvPath\Scripts\python.exe"
+# Venv layout differs by platform: Windows uses Scripts\python.exe,
+# POSIX uses bin/python. Build the path with Join-Path so it works on both.
+$python = if ($env:OS -eq "Windows_NT") {
+    Join-Path $root (Join-Path $VenvPath "Scripts/python.exe")
+}
+else {
+    Join-Path $root (Join-Path $VenvPath "bin/python")
+}
+
+if (-not (Test-Path $python)) {
+    throw "Python interpreter not found at '$python'. Delete '$VenvPath' and re-run this script."
+}
 
 Write-Host "Upgrading pip..."
 & $python -m pip install --upgrade pip
