@@ -17,7 +17,7 @@ flowchart TB
         VENV[".venv<br/>Python 3.11.16"]
         RED["Red-DiscordBot 3.5.24"]
         CORE["Core + 17 feature cogs"]
-        CUSTOM["Custom cogs<br/>(discord-bot-cogs)"]
+        CUSTOM["Custom cogs<br/>(nebula-cogs)"]
         DATA[("data/ &nbsp;JSON backend<br/>token · guild config · DBs")]
         LOGS["logs/"]
         BACKUPS["backups/"]

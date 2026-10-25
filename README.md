@@ -23,9 +23,8 @@ Nebula is split across two repositories that belong together:
 | **nebula** (this repo) | Deployment layer: environment, config, scripts, docs, branding. |
 | **[nebula-cogs](https://github.com/kashcmdd/nebula-cogs)** | The original cogs written for Nebula (the `deepseek` AI assistant). |
 
-Local working copies are the folders `discord-bot-deploy` (this repo) and
-`discord-bot-cogs` (the cogs). This repo installs and runs Red and loads the
-cogs from the other.
+Local working copies are the folders `nebula` (this repo) and `nebula-cogs`
+(the cogs). This repo installs and runs Red and loads the cogs from the other.
 
 ## Status
 
@@ -34,7 +33,7 @@ cogs from the other.
 - [x] 17 feature cogs loaded via `config/cogs.txt` (19 total with Core + CogManagerUI)
 - [x] Backup, update, run and supervise scripts, plus docs
 - [x] Branding: violet `#7C3AED` embed colour, description, help tagline, generated avatar
-- [x] Custom cog: `deepseek` AI assistant (`discord-bot-cogs` repo) — `!ai`, mentions, reply, AI channel
+- [x] Custom cog: `deepseek` AI assistant (`nebula-cogs` repo) — `!ai`, mentions, reply, AI channel
 - [ ] Unattended service (see `docs/setup.md`)
 - [ ] Music / Lavalink (deferred)
 

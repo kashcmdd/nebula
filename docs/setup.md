@@ -53,7 +53,17 @@ Creates the instance with its data directory at `./data` (gitignored).
 ## 5. Load the cogs
 
 Red ships **every cog unloaded**; only `Core` and `CogManagerUI` run by a
-default. `config/cogs.txt` lists the cogs this deployment loads:
+default. `config/cogs.txt` lists the cogs this deployment loads.
+
+If you also want the custom `deepseek` cog, register its checkout first — Red
+only searches paths it knows about (the bot must be stopped):
+
+```powershell
+./scripts/add-cog-path.ps1 -Path ../nebula-cogs
+```
+
+Then write the startup list. This works on a fresh instance: when the core
+config is still empty, the script seeds it:
 
 ```powershell
 ./scripts/load-cogs.ps1
@@ -128,8 +138,8 @@ WantedBy=default.target
 
 Then `systemctl --user daemon-reload && systemctl --user enable --now nebula`.
 Run `loginctl enable-linger $USER` so it starts at boot without you logging in.
-Red stores its instance registry under `$XDG_DATA_HOME` (`~/.local/share`), so
-the unit must run as your own user, not root.
+Red stores its instance registry under `$XDG_CONFIG_HOME`
+(`~/.config/Red-DiscordBot`), so the unit must run as your own user, not root.
 
 ## Backups
 
